@@ -1,0 +1,175 @@
+﻿@using PFC.SGP.UI.ViewModels
+@model List<TurmaVM>
+@{
+    ViewBag.Title = "Relação de turmas";
+}
+
+<div class="app-header">
+    <button class="btn btn-primary app-header-btn" data-toggle="modal" data-target="#modalCadastroTurma">Nova</button>
+    <h3 class="app-title">Relação de Turmas</h3>
+    <p>Relação de turmas coordenadas por você.</p>
+</div>
+<table id="table_id" class="table table-hover table-responsive table-reactive">
+    <thead class="bg-primary text-white">
+        <tr>
+            <th>Código</th>
+            <th>Alunos no sistema</th>
+            <th>Curso</th>
+            <th style="width:1px;">AÇÕES</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var turma in Model)
+        {
+            <tr id="turma-@turma.Id">
+                <td>@turma.Codigo</td>
+                <td>@turma.AlunosCadastrados</td>
+                <td>@turma.Curso.ToString()</td>
+                <td class="btn-group">
+                    <button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editModalTurma"
+                            data-id-turma="@turma.Id"
+                            data-cod-turma="@turma.Codigo">
+                        Editar
+                    </button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="ConfirmDelTurma(@turma.Id, '@turma.Codigo')">Excluir</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div data-id="0" class="modal fade" id="editModalTurma" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title-edit-turma">Editando Turma</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form autocomplete="off" id="editForm">
+                    <input hidden type="text" id="inputEditIdTurma" name="id" />
+                    <div class="form-group">
+                        <label for="inputEditCodigoTurma">Código da turma</label>
+                        <input type="text" min="0" class="form-control" id="inputEditCodigoTurma" name="Codigo" placeholder="Insira o código da turma" required>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="selCursos">Curso</label>
+                            <select id="selCursosEditTurma" class="selectpicker form-control" data-live-search="true" name="idCurso">
+                                @foreach (var curso in ViewBag.Cursos)
+                                {
+                                    <option value="@curso.Id">@curso.Nome</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <small class="d-block text-danger">
+                        <label id="UserFeedbackEdit"></label>
+                    </small>
+                    <div class="btn-group col-md-12">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnEditSubmit">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-id="0" class="modal fade" id="delModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Exclusão de Turma</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir a turma de código <span id="codTurmaModal"></span> ?</p>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group col-md-12">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" onclick="DelTurma()" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCadastroTurma" tabindex="-1" role="dialog" aria-labelledby="modalCadastroTurmaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCadastroTurmaLabel">Cadastrando turma</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form autocomplete="off" id="addForm">
+                    <div class="form-group">
+                        <label for="inputCodigo">Código da turma</label>
+                        <input type="text" class="form-control" id="inputCodigo" name="Codigo" placeholder="Insira o código da turma" required>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="selCursos">Curso</label>
+                            <select id="selCursos" class="selectpicker form-control" data-live-search="true" name="idCurso">
+                                @foreach (var curso in ViewBag.Cursos)
+                                {
+                                    <option value="@curso.Id">@curso.Nome</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <small class="d-block text-danger">
+                        <label id="UserFeedback"></label>
+                    </small>
+                    <div class="btn-group col-md-12">
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-secondary">Cancelar</button>
+                        <button id="btnCadastroSubmit" type="button" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript" src="~/Scripts/sgp/turmas/Index.js"></script>
+    <script>
+        $('#btnCadastroSubmit').on('click', function () {
+            var Codigo = $('#inputCodigo').val()
+            var idCurso = $('#selCursos').val()
+            var url =  '@Url.Action("Add","Turmas")'
+            $.post(url, { Codigo: Codigo, idCurso: idCurso }, function (verificacao) {
+                if (verificacao == "true") {
+                    window.location.href = '@Url.Action("Index", "Turmas")';
+                }
+                else {
+                    console.log('a')
+                    $('#UserFeedback').text('Já existe uma turma com esse código ou os dados estão incorretos.')
+                }
+            });
+
+        });
+        $('#btnEditSubmit').on('click', function () {
+            var Id = $('#inputEditIdTurma').val()
+            var Codigo = $('#inputEditCodigoTurma').val()
+            var idCurso = $('#selCursosEditTurma').val()
+            var url =  '@Url.Action("Edit","Turmas")'
+            $.post(url, {Id:Id, Codigo: Codigo, idCurso: idCurso}, function (verificacao) {
+                if (verificacao == "true") {
+                    window.location.href = '@Url.Action("Index", "Turmas")';
+                }
+                else {
+                    $('#UserFeedbackEdit').text('Já existe uma turma com esse código ou os dados estão incorretos.')
+                }
+            });
+
+        });
+    </script>
+}

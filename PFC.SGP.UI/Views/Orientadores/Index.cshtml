@@ -1,0 +1,108 @@
+﻿@using PFC.SGP.UI.ViewModels
+@model List<OrientadorVM>
+@{
+    ViewBag.Title = "Relação de Orientadores";
+}
+
+<h3 class="border-bottom border-secondary pb-2 mt-4 mb-5">@ViewBag.Title</h3>
+
+<table id="table_id" class="table table-hover table-responsive table-reactive">
+    <thead class="bg-primary text-white">
+        <tr>
+            <th>Codigo</th>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th style="width:1px;">AÇÕES</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orientador in Model)
+        {
+            <tr id="orientador-@orientador.Id">
+                <td>@orientador.Codigo</td>
+                <td data-toggle="modal" data-target="#modalInfoOrientador"
+                    data-codigo-orientador="@orientador.Codigo"
+                    data-nome-orientador="@orientador.Nome"
+                    data-sobrenome-orientador="@orientador.Sobrenome"
+                    data-email-orientador="@orientador.Email"
+                    data-telefone-orientador="@orientador.Telefone"
+                    style="cursor: pointer;">
+                    @orientador.Nome
+                </td>
+                <td>@orientador.Sobrenome</td>
+                <td class="btn-group text-center">
+                    <a class="btn btn-outline-primary btn-sm" href="~/Orientadores/Edit/@orientador.Id">Editar</a>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="ConfirmDelOrientador(@orientador.Id, '@orientador.Nome', '@orientador.Codigo')">Excluir</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div data-id="0" class="modal fade" id="delModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Exclusão de Orientador</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir o orientador <span id="nomeOrientadorModal"></span> ?</p>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group col-md-12">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" onclick="DelOrientador()" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalInfoOrientador" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title-orientador">Detalhes do orientador</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label for="txtCodigo">Código</label>
+                        <input type="text" class="form-control" id="txtCodigo" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="txtNomeOrientador">Nome</label>
+                        <input type="text" class="form-control" id="txtNomeOrientador" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="txtSobrenomeOrientador">Sobrenome</label>
+                        <input type="text" class="form-control" id="txtSobrenomeOrientador" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="txtTelefoneOrientador">Telefone</label>
+                        <input type="text" class="form-control" id="txtTelefoneOrientador" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="txtEmailOrientador">E-mail</label>
+                        <input type="text" class="form-control" id="txtEmailOrientador" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary col-md-12" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/Scripts/sgp/orientadores/Index.js"></script>
+}

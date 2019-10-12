@@ -1,0 +1,11 @@
+﻿#error-div {
+    width: 80%;
+    margin: 0 auto;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+#error-logo {
+    width: 60%;
+}

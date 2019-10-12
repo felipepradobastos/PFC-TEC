@@ -1,0 +1,127 @@
+﻿@using PFC.SGP.UI.ViewModels
+@model AlunoVM
+@{
+    ViewBag.Title = "Novo Aluno";
+}
+
+<form method="post" autocomplete="off">
+    <div>
+        <h3 class="border-bottom border-primary pb-2 mb-4">Informações básicas</h3>
+        <div class="form-group row">
+            <div class="col-md-4">
+                <label for="txtMatricula">Matricula</label>
+                <input type="text" class="form-control" id="txtMatricula" name="matricula" placeholder="Insira aqui a matricula" autofocus required value="@Model.Matricula">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Matricula, null, new { @class = "text-danger" })
+                </small>
+            </div>
+            <div class="col-md-4">
+                <label for="txtAnoSemestre">Ano de ingresso</label>
+                <input type="number" min="2000" class="form-control" id="txtAnoSemestre" name="anoIngresso" placeholder="Insira aqui o ano de matricula" required value="@Model.AnoIngresso">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.AnoIngresso, null, new { @class = "text-danger" })
+                </small>
+            </div>
+            <div class="col-md-4">
+                <label for="txtSemestre">Mês de ingresso</label>
+                <input type="number" min="1" max="12" class="form-control" id="txtSemestre" name="mesIngresso" placeholder="Insira aqui o semestre de matricula" required value="@Model.MesIngresso">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.MesIngresso, null, new { @class = "text-danger" })
+                </small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="txtNome">Nome do aluno</label>
+                <input type="text" class="form-control" id="txtNome" name="nome" placeholder="Insira aqui o nome" required value="@Model.Nome">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Nome, null, new { @class = "text-danger" })
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label for="txtSobrenome">Sobrenome do aluno</label>
+                <input type="text" class="form-control" id="txtSobrenome" name="sobrenome" placeholder="Insira aqui o sobrenome" required value="@Model.Sobrenome">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Sobrenome, null, new { @class = "text-danger" })
+                </small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="txtTurma" class="col-sm-12">Turma</label>
+            <div class="input-group col-sm-12">
+                <input type="text" class="form-control" id="txtTurma" name="codTurma" placeholder="Escolha a turma clicando no botão" onkeydown="event.preventDefault()" required value="@(Model.Turma==null?"":Model.Turma.ToString())">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modalTurmas">Escolher</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mb-5">
+        <h3 class="border-bottom border-primary pb-2 mb-4 mt-5">Informações para contato</h3>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="txtTel">Telefone do aluno</label>
+                <input type="text" class="form-control" id="txtTel" name="telefone" placeholder="Insira aqui o telefone" required value="@Model.Telefone">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Telefone, null, new { @class = "text-danger" })
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label for="txtEmail">E-mail do aluno</label>
+                <input type="email" class="form-control" id="txtEmail" name="email" aria-describedby="emailHelp" placeholder="Insira aqui o e-mail" required value="@Model.Email">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 btn-group">
+        <a class="btn btn-secondary" href="~/Alunos/Index">Cancelar</a>
+        <button class="btn btn-primary" type="submit">Salvar alterações</button>
+    </div>
+</form>
+
+<div id="modalTurmas" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Escolhendo turma</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <table class="table table-hover" id="table_turma">
+                        <thead class="thead-dark">
+                            <tr class="text-center">
+                                <th>Código</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var turma in ViewBag.turmas)
+                            {
+                                <tr id="turma-@turma.Id" class="text-center">
+                                    <td>@turma.Codigo</td>
+                                    <td>
+                                        <button class="btn btn-outline-success btn-sm" onclick="modalTurma('@turma.Codigo')">Escolher</button>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript" src="~/Scripts/sgp/alunos/Add.js"></script>
+}

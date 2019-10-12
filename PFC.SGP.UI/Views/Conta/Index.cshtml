@@ -1,0 +1,106 @@
+﻿@using PFC.SGP.UI.ViewModels
+@model List<UsuarioVM>
+@{
+    ViewBag.title = "Relação de coordenadores";
+}
+
+<div class="app-header">
+    <a class="btn btn-primary app-header-btn" href="~/Conta/Add">Novo</a>
+    <h3 class="app-title">Relação de Coordenadores</h3>
+    <p>Relação de pessoas que podem coordenar cursos.</p>
+</div>
+<div>
+    <table id="table_id" class="table table-hover table-responsive table-reactive">
+        <thead class="bg-primary text-white">
+            <tr>
+                <th>Codigo</th>
+                <th>Nome</th>
+                <th>Sobrenome</th>
+                <th>Curso(s)</th>
+                <th style="width:1px;">AÇÕES</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var coordenador in Model)
+            {
+                <tr id="coordenador-@coordenador.Id">
+                    <td>@coordenador.Codigo</td>
+                    <td style="cursor: pointer;" data-toggle="modal" data-target="#modalDetalhesCoordenador"
+                        data-nome="@coordenador.Nome"
+                        data-login="@coordenador.Login"
+                        data-email="@coordenador.Email"
+                        data-telefone="@coordenador.Telefone">
+                        @coordenador.Nome
+                    </td>
+                    <td>@coordenador.Sobrenome</td>
+                    <td>@coordenador.ObterCursos()</td>
+                    <td class="btn-group">
+                        <a class="btn btn-outline-primary btn-sm" href="~/Conta/Edit/@coordenador.Id">Editar</a>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="ConfirmDelCoord(@coordenador.Id, '@coordenador.Nome', '@coordenador.Codigo')">Excluir</button>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="modalDetalhesCoordenador" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="txtDetModalTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="inputLogin">Login</label>
+                        <input type="text" class="form-control" id="txtDetLogin" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="txtEmail">E-mail</label>
+                        <input type="text" class="form-control" id="txtDetEmail" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="txtTel">Telefone</label>
+                        <input type="text" class="form-control" id="txtDetTelefone" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-id="0" class="modal fade" id="delModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Exclusão de Coordenador</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir o coordenador <span id="nomeCoordModal"></span> ?</p>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group col-md-12">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" onclick="DelCoord()" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/Scripts/sgp/conta/Index.js"></script>
+}

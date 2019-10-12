@@ -1,0 +1,171 @@
+﻿@using PFC.SGP.UI.ViewModels
+@model AlunoVM
+@{
+    ViewBag.Title = "Editar Aluno";
+}
+
+<form method="post" autocomplete="off">
+    <div>
+        <h3 class="border-bottom border-primary pb-2 mb-4">Informações básicas</h3>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label for="txtMatricula">Matricula</label>
+                <input type="text" class="form-control" id="txtMatricula" name="matricula" placeholder="Insira aqui a matricula" value="@Model.Matricula" autofocus>
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Matricula, null, new { @class = "text-danger" })
+                </small>
+            </div>
+            <div class="col-md-3">
+                <label for="txtAnoIngresso">Ano de ingresso</label>
+                <input type="number" min="2000" max="2090" class="form-control" id="txtAnoIngresso" name="AnoIngresso" placeholder="Insira aqui o ano de matricula desse aluno" value="@Model.AnoIngresso">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.AnoIngresso, null, new { @class = "text-danger" })
+                </small>
+            </div>
+            <div class="col-md-3">
+                <label for="txtMesIngresso">Mês de ingresso</label>
+                <input type="number" min="1" max="12" class="form-control" id="txtMesIngresso" name="MesIngresso" placeholder="Insira aqui o semestre de matricula desse aluno" value="@Model.MesIngresso">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.MesIngresso, null, new { @class = "text-danger" })
+                </small>
+            </div>
+            <div class="col-md-3">
+                <label for="selectStatus">Status</label>
+                <select class="form-control" id="selectStatus" name="status">
+                    <option value="1">Matriculado</option>
+                    <option value="2">Aprovado</option>
+                    <option value="3">Aprovado com restrição</option>
+                    <option value="4">Reprovado</option>
+                    <option value="5">Jubilado</option>
+                    <option value="6">Abandonou</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <small class="d-block col-md-12">
+                @Html.ValidationMessageFor(model => model.MesApresentacao, null, new { @class = "text-danger" })
+            </small>
+            <div class="input-group col-md-12">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Previsão de apresentação</span>
+                </div>
+                <input readonly type="number" min="1" max="12" class="form-control" id="txtMesApresentacao" name="MesApresentacao" placeholder="Insira aqui o mês previsto para a apresentação" value="@Model.MesApresentacao">
+                <input readonly type="number" min="2000" max="2090" class="form-control" id="txtAnoApresentacao" name="anoApresentacao" placeholder="Insira aqui o ano previsto para a apresentação" value="@Model.AnoApresentacao">
+            </div>
+            <div class="form-check mt-1">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="chkAdiar">
+                    <label class="custom-control-label" for="chkAdiar" id="lblAdiar">Alterar previsão de entrega?</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="txtNome">Nome do aluno</label>
+                <input type="text" class="form-control" id="txtNome" name="nome" placeholder="Insira aqui o nome" value="@Model.Nome">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Nome, null, new { @class = "text-danger" })
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label for="txtSobrenome">Sobrenome do aluno</label>
+                <input type="text" class="form-control" id="txtSobrenome" name="sobrenome" placeholder="Insira aqui o sobrenome" value="@Model.Sobrenome">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Sobrenome, null, new { @class = "text-danger" })
+                </small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="txtTurma" class="col-sm-12">Turma</label>
+            <div class="input-group col-sm-12">
+                <input type="text" class="form-control" id="txtTurma" name="codTurma" value="@Model.Turma.ToString()" placeholder="Escolha a turma clicando no botão" onkeydown="event.preventDefault()" required>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modalTurmas">Escolher</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mb-5">
+        <h3 class="border-bottom border-primary pb-2 mb-4 mt-5">Informações para contato</h3>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="txtTel">Telefone do aluno</label>
+                <input type="text" class="form-control" id="txtTel" name="telefone" placeholder="Insira aqui o telefone" value="@Model.Telefone">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Telefone, null, new { @class = "text-danger" })
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label for="txtEmail">E-mail do aluno</label>
+                <input type="email" class="form-control" id="txtEmail" name="email" aria-describedby="emailHelp" placeholder="Insira aqui o e-mail" value="@Model.Email">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 btn-group">
+        <a class="btn btn-secondary" href="~/Alunos/Index">Cancelar</a>
+        <button class="btn btn-primary" type="submit">Salvar alterações</button>
+    </div>
+</form>
+
+<div id="modalTurmas" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Escolhendo turma</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <table id="table_turma" class="table table-hover">
+                        <thead class="thead-dark">
+                            <tr class="text-center">
+                                <th>Código</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var turma in ViewBag.turmas)
+                            {
+                                <tr id="turma-@turma.Id" class="text-center">
+                                    <td>@turma.Codigo</td>
+                                    <td class="btn-group">
+                                        <button class="btn btn-outline-success btn-sm" onclick="modalTurma('@turma.Codigo')">Escolher</button>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/Scripts/sgp/alunos/Edit.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#selectStatus").val(@Model.Status);
+        });
+        $('#chkAdiar').change(function () {
+            if (document.getElementById('chkAdiar').checked) {
+                $('#txtAnoApresentacao').prop("readonly", false)
+                $('#txtMesApresentacao').prop("readonly", false)
+            } else {
+                $('#txtAnoApresentacao').prop("readonly", true)
+                $('#txtAnoApresentacao').val(@ViewBag.DataAntiga[0])
+                $('#txtMesApresentacao').prop("readonly", true)
+                $('#txtMesApresentacao').val(@ViewBag.DataAntiga[1])
+            }
+        });
+    </script>
+}

@@ -1,0 +1,200 @@
+﻿@using PFC.SGP.UI.ViewModels
+@model List<CursoVM>
+@{
+    ViewBag.Title = "Relação de cursos";
+}
+<div class="app-header">
+    <button class="btn btn-primary app-header-btn" data-toggle="modal" data-target="#modalCadastroCurso">Novo</button>
+    <h3 class="app-title">Relação de Cursos</h3>
+    <p>Relação de cursos que podem ser associados a um coordenador.</p>
+</div>
+<table id="table_id" class="table table table-hover table-responsive table-reactive">
+    <thead class="bg-primary text-white">
+        <tr>
+            <th>Nome</th>
+            <th>Qtd. Semestres</th>
+            <th style="width:1px;">AÇÕES</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var curso in Model)
+        {
+            <tr id="curso-@curso.Id">
+                <td>@curso.Nome</td>
+                <td>@curso.QtdSemestres</td>
+                <td class="btn-group">
+                    <button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editModal"
+                            data-id-curso="@curso.Id"
+                            data-nome-curso="@curso.Nome"
+                            data-qtd-curso="@curso.QtdSemestres">
+                        Editar
+                    </button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="ConfirmDelCurso(@curso.Id, '@curso.Nome')">Excluir</button>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<div id="modalInfoCoordenador" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalhes do coordenador</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label for="txtCodigo">Codigo</label>
+                        <input type="text" class="form-control" id="txtCodigo" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="txtNome">Nome</label>
+                        <input type="text" class="form-control" id="txtNome" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="txtSobrenome">Sobrenome</label>
+                        <input type="text" class="form-control" id="txtSobrenome" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="txtEmail">Email</label>
+                        <input type="text" class="form-control" id="txtEmail" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="txtTelefone">Telefone</label>
+                        <input type="text" class="form-control" id="txtTelefone" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalCadastroCurso" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Novo curso</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form autocomplete="off" id="addForm">
+                    <div class="form-group">
+                        <label for="inputNome">Nome do curso</label>
+                        <input type="text" class="form-control" id="inputNome" name="Nome" placeholder="Insira o nome do curso" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputQtdSemestres">Quantidade de semestres</label>
+                        <input type="number" min="0" class="form-control" id="inputQtdSemestres" name="QtdSemestres" placeholder="Insira a quantidade de semestres" required>
+                    </div>
+                    <small id="UserFeedback" class="d-block text-danger mb-2">
+                        <label id="UserFeedback"></label>
+                    </small>
+                    <div class="btn-group col-md-12">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnCadastroSubmit">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-id="0" class="modal fade" id="editModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title-edit">Editando Curso</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="@Url.Action("Edit","Cursos")" autocomplete="off">
+                    <input hidden type="text" id="inputEditId" name="id" />
+                    <div class="form-group">
+                        <label for="inputEditNome">Nome do curso</label>
+                        <input type="text" class="form-control" id="inputEditNome" name="Nome" placeholder="Insira o nome do curso" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEditQtdSemestres">Quantidade de semestres</label>
+                        <input type="number" min="0" class="form-control" id="inputEditQtdSemestres" name="QtdSemestres" placeholder="Insira a quantidade de semestres" required>
+                    </div>
+                    <small id="UserFeedbackEdit" class="d-block text-danger mb-2">
+                        <label id="UserFeedback"></label>
+                    </small>
+                    <div class="btn-group col-md-12">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnEditSubmit">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div data-id="0" class="modal fade" id="delModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Exclusão de Curso</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir o curso de nome "<span id="nomeCursoModal"></span>" ?</p>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group col-md-12">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" onclick="DelCurso()" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/Scripts/sgp/cursos/Index.js"></script>
+    <script>
+        $('#btnCadastroSubmit').on('click', function () {
+            var Nome = $('#inputNome').val()
+            var QtdSemestres = $('#inputQtdSemestres').val()
+            var url =  '@Url.Action("Add","Cursos")'
+            $.post(url, { Nome: Nome, QtdSemestres: QtdSemestres}, function (verificacao) {
+                if (verificacao == "true") {
+                    window.location.href = '@Url.Action("Index", "Cursos")';
+                }
+                else {
+                    $('#UserFeedback').text('Já existe um curso com esse nome ou as informações são inválidas.')
+                }
+            });
+
+        });
+        $('#btnEditSubmit').on('click', function () {
+            var Id = $('#inputEditId').val()
+            var Nome = $('#inputEditNome').val()
+            var QtdSemestres = $('#inputEditQtdSemestres').val()
+            var url =  '@Url.Action("Edit","Cursos")'
+            $.post(url, {Id: Id, Nome: Nome, QtdSemestres: QtdSemestres}, function (verificacao) {
+                if (verificacao == "true") {
+                    window.location.href = '@Url.Action("Index", "Cursos")';
+                }
+                else {
+                    $('#UserFeedbackEdit').text('Já existe um curso com esse nome ou as informações são inválidas.')
+                }
+            });
+
+        });
+    </script>
+}

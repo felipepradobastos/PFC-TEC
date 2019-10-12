@@ -1,0 +1,250 @@
+﻿@using PFC.SGP.UI.ViewModels.Home.Dashboard;
+@{
+    ViewBag.Title = "Página Inicial";
+}
+
+@section links
+{
+    <link href="~/Content/sgp/dashboard.css" rel="stylesheet" />
+}
+@if (User.Identity.Name.Equals("admin"))
+{
+    <h1>@ViewBag.Title</h1>
+    <p>Bem vindo ao sistema de gerenciamento de projetos.</p>
+}
+else
+{
+    <div id="dash-title-container">
+        <i href="#" role="button" class="fas fa-question-circle text-white float-right align-content-end" data-toggle="popover" title="" data-content="São estimativas baseadas na soma de meses corridos desde o mês de ingresso do aluno." data-original-title="Aviso"></i>
+        <label id="dash-title">Próximos trabalhos. </label>
+    </div>
+
+    <div id="dash">
+        <div id="accordion">
+            <div class="ret-alunos ret-vermelho d-block">
+                <button class="btn btn-dia" data-toggle="collapse" data-target="#table_15" aria-expanded="true"
+                        aria-controls="table_15">
+                    MENOS DE 15 DIAS
+                </button>
+                <div id="table_15" class="collapse show" data-parent="#accordion">
+                    <table class="col-md-12">
+                        <tbody>
+                            @{
+                                if (((List<TrabalhoDashboardVM>)ViewBag.Trabalhos15Dias).Count() <= 0)
+                                {
+                                    <tr>
+                                        <td class="dotted-divisor">
+                                            <label>Nenhum registro encontrado.</label>
+                                        </td>
+                                    </tr>
+
+                                }
+                                else
+                                {
+                                    foreach (TrabalhoDashboardVM trab in ViewBag.Trabalhos15Dias)
+                                    {
+                                        <tr>
+                                            <td class="dotted-divisor">
+                                                <button class="btn btn-aluno d-block"
+                                                        data-toggle="modal" data-target="#detalhesModal"
+                                                        data-nome-trabalho="@trab.Nome"
+                                                        data-codigo-orientador="@trab.Orientador.Codigo"
+                                                        data-nome-orientador="@trab.Orientador.Nome"
+                                                        data-sobrenome-orientador="@trab.Orientador.Sobrenome"
+                                                        data-email-orientador="@trab.Orientador.Email"
+                                                        data-telefone-orientador="@trab.Orientador.Telefone"
+                                                        data-matricula-aluno="@trab.Aluno.Matricula"
+                                                        data-nome-aluno="@trab.Aluno.Nome"
+                                                        data-sobrenome-aluno="@trab.Aluno.Sobrenome"
+                                                        data-email-aluno="@trab.Aluno.Email"
+                                                        data-telefone-aluno="@trab.Aluno.Telefone">
+                                                    @trab.Nome
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!---->
+            <div class="ret-alunos ret-amarelo d-block">
+                <button class="btn btn-dia" data-toggle="collapse" data-target="#table_30" aria-expanded="false"
+                        aria-controls="table_30">
+                    MENOS DE 30 DIAS
+                </button>
+                <div id="table_30" class="collapse" data-parent="#accordion">
+                    <table class="col-md-12">
+                        <tbody>
+
+                            @{
+                                if (((List<TrabalhoDashboardVM>)ViewBag.Trabalhos30Dias).Count() <= 0)
+                                {
+                                    <tr>
+                                        <td class="dotted-divisor">
+                                            <label>Nenhum registro encontrado.</label>
+                                        </td>
+                                    </tr>
+
+                                }
+                                else
+                                {
+                                    foreach (TrabalhoDashboardVM trab in ViewBag.Trabalhos30Dias)
+                                    {
+                                        <tr>
+                                            <td class="dotted-divisor">
+                                                <button class="btn btn-aluno d-block"
+                                                        data-toggle="modal" data-target="#detalhesModal"
+                                                        data-nome-trabalho="@trab.Nome"
+                                                        data-codigo-orientador="@trab.Orientador.Codigo"
+                                                        data-nome-orientador="@trab.Orientador.Nome"
+                                                        data-sobrenome-orientador="@trab.Orientador.Sobrenome"
+                                                        data-email-orientador="@trab.Orientador.Email"
+                                                        data-telefone-orientador="@trab.Orientador.Telefone"
+                                                        data-matricula-aluno="@trab.Aluno.Matricula"
+                                                        data-nome-aluno="@trab.Aluno.Nome"
+                                                        data-sobrenome-aluno="@trab.Aluno.Sobrenome"
+                                                        data-email-aluno="@trab.Aluno.Email"
+                                                        data-telefone-aluno="@trab.Aluno.Telefone">
+                                                    @trab.Nome
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!---->
+            <div class="ret-alunos ret-verde d-block">
+                <button class="btn btn-dia" data-toggle="collapse" data-target="#table_90" aria-expanded="false"
+                        aria-controls="table_90">
+                    MENOS DE 90 DIAS
+                </button>
+                <div id="table_90" class="collapse" data-parent="#accordion">
+                    <table class="col-md-12">
+                        <tbody>
+                            @{
+                                if (((List<TrabalhoDashboardVM>)ViewBag.Trabalhos90Dias).Count() <= 0)
+                                {
+                                    <tr>
+                                        <td class="dotted-divisor">
+                                            <label>Nenhum registro encontrado.</label>
+                                        </td>
+                                    </tr>
+
+                                }
+                                else
+                                {
+                                    foreach (TrabalhoDashboardVM trab in ViewBag.Trabalhos90Dias)
+                                    {
+                                        <tr>
+                                            <td class="dotted-divisor">
+                                                <button class="btn btn-aluno d-block"
+                                                        data-toggle="modal" data-target="#detalhesModal"
+                                                        data-nome-trabalho="@trab.Nome"
+                                                        data-codigo-orientador="@trab.Orientador.Codigo"
+                                                        data-nome-orientador="@trab.Orientador.Nome"
+                                                        data-sobrenome-orientador="@trab.Orientador.Sobrenome"
+                                                        data-email-orientador="@trab.Orientador.Email"
+                                                        data-telefone-orientador="@trab.Orientador.Telefone"
+                                                        data-matricula-aluno="@trab.Aluno.Matricula"
+                                                        data-nome-aluno="@trab.Aluno.Nome"
+                                                        data-sobrenome-aluno="@trab.Aluno.Sobrenome"
+                                                        data-email-aluno="@trab.Aluno.Email"
+                                                        data-telefone-aluno="@trab.Aluno.Telefone">
+                                                    @trab.Nome
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="detalhesModal" tabindex="-1" role="dialog" aria-labelledby="detalhesModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detalhesModalTitle">Visualizando trabalho</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5 id="detalhes-aluno-title">Detalhes do aluno</h5>
+                    <div id="detalhesAluno">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label for="txtMatricula">Matricula</label>
+                                <input type="text" class="form-control" id="txtMatricula" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="txtNomeAluno">Nome</label>
+                                <input type="text" class="form-control" id="txtNomeAluno" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="txtSobrenomeAluno">Sobrenome</label>
+                                <input type="text" class="form-control" id="txtSobrenomeAluno" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="txtTelefoneAluno">Telefone</label>
+                                <input type="text" class="form-control" id="txtTelefoneAluno" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="txtEmailAluno">E-mail</label>
+                                <input type="text" class="form-control" id="txtEmailAluno" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 id="detalhes-orientador-title">Detalhes do orientador</h5>
+                    <div id="detalhesOrientador">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label for="txtCodigo">Código</label>
+                                <input type="text" class="form-control" id="txtCodigo" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="txtNomeOrientador">Nome</label>
+                                <input type="text" class="form-control" id="txtNomeOrientador" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="txtSobrenomeOrientador">Sobrenome</label>
+                                <input type="text" class="form-control" id="txtSobrenomeOrientador" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="txtTelefoneOrientador">Telefone</label>
+                                <input type="text" class="form-control" id="txtTelefoneOrientador" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="txtEmailOrientador">E-mail</label>
+                                <input type="text" class="form-control" id="txtEmailOrientador" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary col-md-12" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts
+    {
+        <script src="~/Scripts/sgp/home/Index.js"></script>
+    }
+}

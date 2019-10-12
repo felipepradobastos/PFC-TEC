@@ -1,0 +1,57 @@
+﻿@using PFC.SGP.UI.ViewModels
+@model OrientadorVM
+@{
+    ViewBag.Title = "Editar Orientador";
+}
+
+<form method="post" autocomplete="off">
+    <div>
+        <h3 class="border-bottom border-success pb-2 mb-4">Informações básicas</h3>
+        <div class="form-group row">
+            <div class="col-md-4">
+                <label for="txtCodigo">Código</label>
+                <input type="text" class="form-control" id="txtCodigo" name="codigo" placeholder="Insira aqui o codigo" value="@Model.Codigo" required>
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Codigo, null, new { @class = "text-danger" })
+                </small>
+            </div>
+            <div class="col-md-4">
+                <label for="txtNome">Nome do orientador</label>
+                <input type="text" class="form-control" id="txtNome" name="nome" placeholder="Insira aqui o nome" value="@Model.Nome" required>
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Nome, null, new { @class = "text-danger" })
+                </small>
+            </div>
+            <div class="col-md-4">
+                <label for="txtSobrenome">Sobrenome do orientador</label>
+                <input type="text" class="form-control" id="txtSobrenome" name="sobrenome" placeholder="Insira aqui o sobrenome" value="@Model.Sobrenome" required>
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Sobrenome, null, new { @class = "text-danger" })
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="mb-5">
+        <h3 class="border-bottom border-success pb-2 mb-4 mt-5">Informações para contato</h3>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="txtTel">Telefone do orientador</label>
+                <input type="text" class="form-control" id="txtTel" name="telefone" placeholder="Insira aqui o telefone" value="@Model.Telefone" required>
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Telefone, null, new { @class = "text-danger" })
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label for="txtEmail">E-mail do orientador</label>
+                <input type="email" class="form-control" id="txtEmail" name="email" aria-describedby="emailHelp" placeholder="Insira aqui o e-mail" value="@Model.Email" required>
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 btn-group">
+        <a class="btn btn-secondary" href="~/Orientadores/Index">Cancelar</a>
+        <button class="btn btn-primary" type="submit">Salvar Alterações</button>
+    </div>
+</form>

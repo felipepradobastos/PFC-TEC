@@ -1,0 +1,35 @@
+﻿* {
+    padding: 0;
+    margin: 0;
+    color: black;
+}
+.login-panel {
+    display: inline-block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 45%;
+    height: 60vh;
+    margin: auto;
+}
+
+#logo {
+    max-width: 400px;
+    display: block;
+    margin: 10px auto;
+    width: 85%;
+}
+#senai-logo {
+    display: block;
+    margin: 10px auto;
+    width: 150px;
+}
+
+#grad {
+    width: 100%;
+    height: 100vh;
+    color: #fff;
+    background: linear-gradient(to bottom, #7db9e8 0%,#2989d8 50%,#1e5799 100%);
+}

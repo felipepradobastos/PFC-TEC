@@ -1,0 +1,71 @@
+﻿@using PFC.SGP.UI.ViewModels
+@model LoginVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="~/Content/sgp/login.css" rel="stylesheet" />
+        <title>SGP | Login</title>
+    </head>
+    <body id="grad">
+        <div class="container">
+            <div>
+                <form method="post" autocomplete="off">
+                    <div class="login-panel">
+                        <img id="logo" src="~/Resource/large-logo.png" alt="SGP LOGO">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div>
+                                        <small>
+                                            @Html.ValidationMessageFor(model => model.Login, null, new { @class = "text-danger" })
+                                        </small>
+                                    </div>
+                                    <label for="inputLogin">Login</label>
+                                    <input type="text" class="form-control" id="inputLogin" name="Login" placeholder="Insira o seu login no sistema" required>
+                                    <small id="emailHelp" class="form-text text-muted">Não compartilhe seu login com ninguem</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputSenha">Senha</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupPrepend">*</span>
+                                        </div>
+                                        <input type="password" class="form-control" id="inputSenha" name="Senha" placeholder="Insira sua senha" required>
+                                    </div>
+                                </div>
+                                <div class="form-group form-check">
+                                    @Html.CheckBoxFor(model => model.PermanecerLogado, new { @class = "form-check-input" })
+                                    <label class="form-check-label" for="PermanecerLogado">Lembrar-me</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Entrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script src="https://kit.fontawesome.com/c55cce1c0c.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                crossorigin="anonymous">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+
+    </body>
+
+</html>

@@ -1,0 +1,89 @@
+﻿@using PFC.SGP.UI.ViewModels
+@model UsuarioVM
+@{
+    ViewBag.title = "Novo coordenador";
+}
+
+
+<form method="post" action="@Url.Action("Add","Conta")" autocomplete="off">
+    <div class="col-md-12">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="inputCodigo">Código</label>
+                <input type="text" class="form-control" id="inputCodigo" name="Codigo" placeholder="Insira aqui o código" required value="@Model.Codigo">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Codigo, null, new { @class = "text-danger" })
+                </small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="inputNome">Nome</label>
+                <input type="text" class="form-control" id="inputNome" name="Nome" placeholder="Insira aqui o nome" required value="@Model.Nome">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Nome, null, new { @class = "text-danger" })
+                </small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="inputSobrenome">Sobrenome</label>
+                <input type="text" class="form-control" id="inputSobrenome" name="Sobrenome" placeholder="Insira aqui o sobrenome" required value="@Model.Sobrenome">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Sobrenome, null, new { @class = "text-danger" })
+                </small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="inputLogin">Login</label>
+                <input type="text" class="form-control" id="inputLogin" name="Login" placeholder="Insira aqui o login" required value="@Model.Login">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Login, null, new { @class = "text-danger" })
+                </small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="txtEmail">E-mail</label>
+                <input type="email" class="form-control" id="txtEmail" name="Email" aria-describedby="emailHelp" placeholder="Insira aqui o e-mail" required value="@Model.Email">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
+                </small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="txtTel">Telefone</label>
+                <input type="text" class="form-control" id="txtTel" name="Telefone" placeholder="Insira aqui o telefone" required value="@Model.Telefone">
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Telefone, null, new { @class = "text-danger" })
+                </small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="selCursos">Cursos</label>
+                <select id="selCursos" class="selectpicker form-control" multiple data-live-search="true" name="idCursos">
+                    @foreach (var curso in ViewBag.Cursos)
+                    {
+                        <option value="@curso.Id">@curso.Nome</option>
+
+                    }
+                </select>
+                <small class="d-block">
+                    @Html.ValidationMessageFor(model => model.Cursos, null, new { @class = "text-danger" })
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 btn-group">
+        <a class="btn btn-secondary" href="~/Conta/Index">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </div>
+</form>
+
+@section Scripts{
+    <script type="text/javascript" src="~/Scripts/sgp/conta/Add.js"></script>
+
+}

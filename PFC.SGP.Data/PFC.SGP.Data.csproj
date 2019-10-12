@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7072B958-32B5-4B93-9143-EB30D82D1AE4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PFC.SGP.Data</RootNamespace>
+    <AssemblyName>PFC.SGP.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EF\DataModel.cs" />
+    <Compile Include="EF\DbInitializer.cs" />
+    <Compile Include="EF\Maps\AlunoMap.cs" />
+    <Compile Include="EF\Maps\CursoMap.cs" />
+    <Compile Include="EF\Maps\OrientadorMap.cs" />
+    <Compile Include="EF\Maps\TrabalhoMap.cs" />
+    <Compile Include="EF\Maps\TurmaMap.cs" />
+    <Compile Include="EF\Maps\UsuarioMap.cs" />
+    <Compile Include="EF\PFCSGPDataContext.cs" />
+    <Compile Include="EF\Repositories\UsuarioRepositoryEF.cs" />
+    <Compile Include="EF\Repositories\OrientadorRepositoryEF.cs" />
+    <Compile Include="EF\Repositories\TrabalhoRepositoryEF.cs" />
+    <Compile Include="EF\Repositories\AlunoRepositoryEF.cs" />
+    <Compile Include="EF\Repositories\TurmaRepositoryEF .cs" />
+    <Compile Include="EF\Repositories\CursoRepositoryEF.cs" />
+    <Compile Include="EF\Repositories\RepositoryEF.cs" />
+    <Compile Include="Migrations\201910091044376_MigrationInicial.cs" />
+    <Compile Include="Migrations\201910091044376_MigrationInicial.Designer.cs">
+      <DependentUpon>201910091044376_MigrationInicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910121302078_PFCSGPDB-MOD1.cs" />
+    <Compile Include="Migrations\201910121302078_PFCSGPDB-MOD1.Designer.cs">
+      <DependentUpon>201910121302078_PFCSGPDB-MOD1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PFC.SGP.Domain\PFC.SGP.Domain.csproj">
+      <Project>{778a00ea-0300-4ca8-85ba-6785490e6976}</Project>
+      <Name>PFC.SGP.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201910091044376_MigrationInicial.resx">
+      <DependentUpon>201910091044376_MigrationInicial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910121302078_PFCSGPDB-MOD1.resx">
+      <DependentUpon>201910121302078_PFCSGPDB-MOD1.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

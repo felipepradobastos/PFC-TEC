@@ -1,0 +1,169 @@
+﻿@using PFC.SGP.UI.ViewModels
+@model List<TrabalhoVM>
+@{
+    ViewBag.Title = "Relação de trabalhos";
+}
+
+<h3 class="border-bottom border-secondary pb-2 mt-4 mb-5">@ViewBag.Title</h3>
+<table id="table_id" class="table table table-hover table-responsive table-reactive">
+    <thead class="bg-primary text-white">
+        <tr>
+            <th>Nome</th>
+            <th>Apresentação</th>
+            <th>Aluno</th>
+            <th>Orientador</th>
+            <th>Turma</th>
+            <th style="width:1px;">AÇÕES</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var trab in Model)
+        {
+            <tr id="trab-@trab.Id">
+                <td>@trab.Nome</td>
+                <td>@trab.Apresentacao</td>
+                <td data-toggle="modal" data-target="#modalInfoAluno"
+                    data-matricula-aluno="@trab.Aluno.Matricula"
+                    data-ano-matricula-aluno="@trab.Aluno.AnoIngresso"
+                    data-semestre-matricula-aluno="@trab.Aluno.MesIngresso"
+                    data-nome-aluno="@trab.Aluno.Nome"
+                    data-sobrenome-aluno="@trab.Aluno.Sobrenome"
+                    data-email-aluno="@trab.Aluno.Email"
+                    data-telefone-aluno="@trab.Aluno.Telefone"
+                    style="cursor: pointer;">
+                    @trab.Aluno.Nome
+                </td>
+                <td data-toggle="modal" data-target="#modalInfoOrientador"
+                    data-codigo-orientador="@trab.Orientador.Codigo"
+                    data-nome-orientador="@trab.Orientador.Nome"
+                    data-sobrenome-orientador="@trab.Orientador.Sobrenome"
+                    data-email-orientador="@trab.Orientador.Email"
+                    data-telefone-orientador="@trab.Orientador.Telefone"
+                    style="cursor: pointer;">
+                    @trab.Orientador.Nome
+                </td>
+                <td>@trab.Aluno.Turma.ToString()</td>
+                <td class="btn-group">
+                    <a class="btn btn-outline-primary btn-sm" href="~/Trabalhos/Edit/@trab.Id">Editar</a>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="ConfirmDelTrab(@trab.Id, '@trab.Nome', '@trab.Aluno.Nome', '@trab.Aluno.Matricula')">Excluir</button>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<div id="modalInfoAluno" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title-aluno">Detalhes do aluno</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="txtMatricula">Matricula</label>
+                        <input type="text" class="form-control" id="txtMatricula" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="txtSemestre">Ingresso</label>
+                        <input type="text" class="form-control" id="txtSemestre" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="txtNomeAluno">Nome</label>
+                        <input type="text" class="form-control" id="txtNomeAluno" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="txtSobrenomeAluno">Sobrenome</label>
+                        <input type="text" class="form-control" id="txtSobrenomeAluno" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="txtTelefoneAluno">Telefone</label>
+                        <input type="text" class="form-control" id="txtTelefoneAluno" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="txtEmailAluno">E-mail</label>
+                        <input type="text" class="form-control" id="txtEmailAluno" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalInfoOrientador" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title-orientador">Detalhes do orientador</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label for="txtCodigo">Código</label>
+                        <input type="text" class="form-control" id="txtCodigo" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="txtNomeOrientador">Nome</label>
+                        <input type="text" class="form-control" id="txtNomeOrientador" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="txtSobrenomeOrientador">Sobrenome</label>
+                        <input type="text" class="form-control" id="txtSobrenomeOrientador" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="txtTelefoneOrientador">Telefone</label>
+                        <input type="text" class="form-control" id="txtTelefoneOrientador" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="txtEmailOrientador">E-mail</label>
+                        <input type="text" class="form-control" id="txtEmailOrientador" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-id="0" class="modal fade" id="delModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Exclusão de Trabalho</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir o trabalho "<span id="nomeTrabModal"></span>" do aluno <span id="nomeAlunoModal"></span> ?</p>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group col-md-12">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" onclick="DelTrab()" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/Scripts/sgp/trabalhos/Index.js"></script>
+}
